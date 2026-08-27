@@ -1,9 +1,3 @@
-# HCP Terraform Capstone
-Remote plan trigger test
+# Welcome
 
-This project demonstrates:
-
-- HCP Terraform Workspace
-- GitHub VCS Integration
-- Azure Variable Set
-- Remote Terraform Plan
+This repository contains GitHub workshop exercises.
