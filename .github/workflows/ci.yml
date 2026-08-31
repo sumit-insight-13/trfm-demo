@@ -1,0 +1,46 @@
+name: CI Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      ENV_NAME: DEV
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Repository Secret
+        env:
+          MY_SECRET: ${{ secrets.DEMO_SECRET }}
+        run: |
+          if [ -z "$MY_SECRET" ]; then
+            echo "Secret not found"
+            exit 1
+          fi
+
+          echo "Secret is available"
+
+      - name: Print Job Variable
+        run: echo "Environment is $ENV_NAME"
+
+      - name: Create Artifact File
+        run: |
+          echo "Build Successful" > build.txt
+          echo "Environment: $ENV_NAME" >> build.txt
+
+      - name: Display Artifact Content
+        run: cat build.txt
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build.txt
+          retention-days: 7
